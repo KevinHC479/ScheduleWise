@@ -1,0 +1,1 @@
+# Capa de presentación - Controllers y API endpoints
