@@ -1,0 +1,622 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section con saludo personalizado y efectos visuales -->
+<div class="relative bg-schedule-mesh overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-schedule-primary/80 to-schedule-secondary/80"></div>
+    
+    <!-- Elementos decorativos flotantes -->
+    <div class="absolute top-20 left-10 w-32 h-32 bg-white/5 rounded-full animate-float"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 bg-schedule-accent/20 rounded-full animate-float" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-white/10 rounded-full animate-float" style="animation-delay: 4s;"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center">
+            <div class="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 mb-6 border border-white/20">
+                <span class="w-2 h-2 bg-schedule-accent rounded-full animate-pulse mr-3"></span>
+                <span class="text-white/90 text-sm font-medium">Sistema Activo • CUCEI 2024-A</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 tracking-tight">
+                ¡Hola <span class="text-schedule-accent">Estudiante</span>!
+            </h1>
+            <p class="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto font-medium">
+                Bienvenido a <span class="text-schedule-accent font-semibold">ScheduleWise</span>, 
+                tu asistente inteligente para crear el horario académico perfecto
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="scrollToGenerator()" class="group bg-white text-schedule-primary hover:bg-schedule-accent hover:text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-2xl hover:shadow-schedule-accent/25 hover:scale-105 transform">
+                    <svg class="w-5 h-5 inline mr-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Crear Mi Horario
+                </button>
+                <div class="flex items-center text-white/70 text-sm">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Optimización en segundos
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Cards -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <!-- Card: Mi horario -->
+        <div class="group bg-schedule-card rounded-3xl shadow-xl border border-white/50 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm">
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-schedule-primary to-schedule-secondary rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-schedule-dark">Mi Horario</h3>
+                        <p class="text-gray-600 text-sm">Estado actual</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center py-8">
+                <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-transform duration-500">
+                    <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <p class="text-gray-500 text-sm mb-4 font-medium">Aún no tienes un horario generado</p>
+                <button onclick="scrollToGenerator()" class="text-schedule-primary hover:text-schedule-secondary font-bold text-sm transition-colors duration-300 group-hover:scale-105 transform">
+                    Generar ahora →
+                </button>
+            </div>
+        </div>
+
+        <!-- Card: Progreso académico -->
+        <div class="group bg-schedule-card rounded-3xl shadow-xl border border-white/50 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm">
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-schedule-success to-schedule-teal rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-schedule-dark">Avance Académico</h3>
+                        <p class="text-gray-600 text-sm">Progreso del semestre</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <p class="text-sm text-gray-600 font-medium">Créditos completados:</p>
+                        <span class="text-3xl font-display font-bold text-schedule-dark">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                        <div class="bg-gradient-to-r from-schedule-success to-schedule-teal h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-white/50 rounded-xl p-3">
+                        <div class="text-lg font-bold text-schedule-success">0</div>
+                        <div class="text-xs text-gray-600">Obtenidos</div>
+                    </div>
+                    <div class="bg-white/50 rounded-xl p-3">
+                        <div class="text-lg font-bold text-gray-400">--</div>
+                        <div class="text-xs text-gray-600">Faltantes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Estadísticas -->
+        <div class="group bg-schedule-card rounded-3xl shadow-xl border border-white/50 p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm">
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-schedule-warning to-schedule-pink rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-schedule-dark">Estadísticas</h3>
+                        <p class="text-gray-600 text-sm">Métricas académicas</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-3 bg-white/50 rounded-xl">
+                    <span class="text-sm text-gray-600 font-medium">Materias activas</span>
+                    <span class="font-bold text-schedule-dark text-lg">0</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-white/50 rounded-xl">
+                    <span class="text-sm text-gray-600 font-medium">Promedio general</span>
+                    <span class="font-bold text-schedule-dark text-lg">--</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-white/50 rounded-xl">
+                    <span class="text-sm text-gray-600 font-medium">Semestre actual</span>
+                    <span class="font-bold text-schedule-primary text-lg">2024-A</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generador de Horarios -->
+    <div id="generator" class="bg-white rounded-3xl shadow-2xl border border-white/50 overflow-hidden backdrop-blur-sm">
+        <div class="relative bg-schedule-mesh overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-schedule-primary/90 to-schedule-secondary/90"></div>
+            <div class="relative px-8 py-8">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-display font-bold text-white">Generador Inteligente</h2>
+                        <p class="text-white/80">Optimización automática con IA avanzada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-8">
+            <form id="schedule-form" class="space-y-8">
+                <!-- Paso 1: Materias -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-schedule-primary to-schedule-secondary rounded-full flex items-center justify-center text-white font-bold shadow-lg">1</div>
+                        <div>
+                            <h3 class="text-xl font-display font-bold text-schedule-dark">Selecciona tus Materias</h3>
+                            <p class="text-gray-600">Elige las materias que deseas cursar este semestre</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-schedule-light to-white rounded-2xl p-6 border border-schedule-primary/10">
+                        <button type="button" onclick="loadCuceiSubjects()" class="group bg-gradient-to-r from-schedule-primary to-schedule-secondary hover:from-schedule-secondary hover:to-schedule-primary text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform">
+                            <svg class="w-5 h-5 inline mr-3 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Cargar Catálogo CUCEI
+                        </button>
+                        <p class="text-sm text-gray-600 mt-3 font-medium">Accede al catálogo completo de materias disponibles</p>
+                    </div>
+                    
+                    <div id="subjects-container" class="space-y-4">
+                        <!-- Las materias se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
+                
+                <!-- Paso 2: Preferencias -->
+                <div class="border-t border-gray-200 pt-8">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-schedule-accent to-schedule-teal rounded-full flex items-center justify-center text-white font-bold shadow-lg">2</div>
+                        <div>
+                            <h3 class="text-xl font-display font-bold text-schedule-dark">Configura tus Preferencias</h3>
+                            <p class="text-gray-600">Personaliza las restricciones y preferencias de horario</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-white to-schedule-light rounded-2xl p-6 border border-schedule-primary/10">
+                                <label class="block text-sm font-bold text-schedule-dark mb-3 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-schedule-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    Descanso Mínimo Entre Clases
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="min-break" value="30" min="0" max="120" 
+                                           class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-schedule-primary/20 focus:border-schedule-primary transition-all duration-300 font-medium text-lg">
+                                    <span class="absolute right-4 top-4 text-gray-500 font-medium">minutos</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-white to-schedule-light rounded-2xl p-6 border border-schedule-primary/10">
+                                <label class="block text-sm font-bold text-schedule-dark mb-3 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-schedule-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    Máximo de Horas Diarias
+                                </label>
+                                <div class="relative">
+                                    <input type="number" id="max-daily-hours" value="8" min="1" max="12" 
+                                           class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-schedule-primary/20 focus:border-schedule-primary transition-all duration-300 font-medium text-lg">
+                                    <span class="absolute right-4 top-4 text-gray-500 font-medium">horas</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-schedule-dark mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-schedule-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                                Preferencias de Horario
+                            </label>
+                            <div class="space-y-4">
+                                <label class="group flex items-start p-4 bg-gradient-to-br from-white to-schedule-light rounded-2xl hover:from-schedule-light hover:to-white transition-all duration-300 cursor-pointer border border-schedule-primary/10 hover:border-schedule-primary/30">
+                                    <input type="checkbox" id="avoid-early" class="mt-1 w-5 h-5 rounded border-2 border-gray-300 text-schedule-primary focus:ring-schedule-primary/20 focus:ring-4">
+                                    <div class="ml-4">
+                                        <span class="text-sm font-bold text-schedule-dark group-hover:text-schedule-primary transition-colors">Evitar Clases Matutinas</span>
+                                        <p class="text-xs text-gray-600 mt-1">No programar clases antes de las 9:00 AM</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="group flex items-start p-4 bg-gradient-to-br from-white to-schedule-light rounded-2xl hover:from-schedule-light hover:to-white transition-all duration-300 cursor-pointer border border-schedule-primary/10 hover:border-schedule-primary/30">
+                                    <input type="checkbox" id="avoid-late" class="mt-1 w-5 h-5 rounded border-2 border-gray-300 text-schedule-primary focus:ring-schedule-primary/20 focus:ring-4">
+                                    <div class="ml-4">
+                                        <span class="text-sm font-bold text-schedule-dark group-hover:text-schedule-primary transition-colors">Evitar Clases Nocturnas</span>
+                                        <p class="text-xs text-gray-600 mt-1">No programar clases después de las 6:00 PM</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botón de Generar -->
+                <div class="border-t border-gray-200 pt-8 text-center">
+                    <button type="submit" class="group relative bg-gradient-to-r from-schedule-primary via-schedule-secondary to-schedule-accent hover:from-schedule-accent hover:via-schedule-secondary hover:to-schedule-primary text-white px-12 py-5 rounded-2xl font-display font-bold text-xl transition-all duration-500 shadow-2xl hover:shadow-schedule-primary/30 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 overflow-hidden">
+                        <div class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <svg class="w-6 h-6 inline mr-3 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <span id="generate-text">Generar Horario Inteligente</span>
+                        <span id="loading-text" class="hidden">Optimizando con IA...</span>
+                    </button>
+                    <p class="text-sm text-gray-500 mt-4 font-medium">La optimización inteligente puede tomar unos segundos</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sección de Resultados -->
+    <div id="results-section" class="hidden mt-12">
+        <div class="bg-white rounded-3xl shadow-2xl border border-white/50 overflow-hidden backdrop-blur-sm">
+            <div class="relative bg-schedule-mesh overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-schedule-success/90 to-schedule-teal/90"></div>
+                <div class="relative px-8 py-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-display font-bold text-white">✨ Horario Optimizado</h2>
+                            <p class="text-white/80">Generado exitosamente con inteligencia artificial</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8">
+                <div id="schedule-display" class="space-y-8">
+                    <!-- El horario se mostrará aquí -->
+                </div>
+                
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="downloadSchedule()" class="group bg-gradient-to-r from-schedule-primary to-schedule-secondary hover:from-schedule-secondary hover:to-schedule-primary text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform">
+                        <svg class="w-5 h-5 inline mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 4h8a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        Descargar PDF
+                    </button>
+                    <button onclick="resetForm()" class="group border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-schedule-primary hover:text-schedule-primary px-8 py-4 rounded-2xl font-bold transition-all duration-300">
+                        <svg class="w-5 h-5 inline mr-2 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Generar Nuevo Horario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal con diseño premium -->
+<div id="loading-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="bg-white rounded-3xl p-10 max-w-sm mx-4 shadow-2xl border border-white/50 backdrop-blur-sm">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-schedule-primary/10 to-schedule-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-schedule-primary/20 border-t-schedule-primary"></div>
+                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-schedule-primary/5 to-schedule-secondary/5 animate-pulse"></div>
+            </div>
+            <h3 class="text-xl font-display font-bold text-schedule-dark mb-3">Generando horario...</h3>
+            <p class="text-gray-600 font-medium">Optimizando tu horario académico con IA avanzada</p>
+            <div class="mt-4 w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-gradient-to-r from-schedule-primary to-schedule-secondary h-2 rounded-full animate-pulse" style="width: 60%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let availableSubjects = [];
+    let selectedSubjects = new Set();
+
+    // Función para scroll suave al generador
+    function scrollToGenerator() {
+        document.getElementById('generator').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    }
+
+    // Cargar materias 
+    async function loadCuceiSubjects() {
+        try {
+            const response = await fetch('/api/v1/schedules/subjects/cucei');
+            const subjects = await response.json();
+            availableSubjects = subjects;
+            displaySubjects(subjects);
+        } catch (error) {
+            console.error('Error cargando materias:', error);
+            showNotification('Error al cargar las materias. Por favor, intenta de nuevo.', 'error');
+        }
+    }
+
+    // Mostrar materias disponibles con diseño mejorado
+    function displaySubjects(subjects) {
+        const container = document.getElementById('subjects-container');
+        container.innerHTML = `
+            <div class="grid md:grid-cols-2 gap-6">
+                ${subjects.map(subject => `
+                    <div class="group bg-gradient-to-br from-white to-schedule-light rounded-2xl p-6 border-2 border-gray-200 hover:border-schedule-primary hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1">
+                        <label class="flex items-start space-x-4 cursor-pointer">
+                            <input type="checkbox" value="${subject.code}" onchange="toggleSubject('${subject.code}')" 
+                                   class="mt-2 w-5 h-5 rounded border-2 border-gray-300 text-schedule-primary focus:ring-schedule-primary/20 focus:ring-4 transition-all duration-300">
+                            <div class="flex-1">
+                                <h4 class="font-display font-bold text-schedule-dark text-lg group-hover:text-schedule-primary transition-colors">${subject.name}</h4>
+                                <p class="text-sm text-gray-600 mb-3 font-medium">${subject.code} • ${subject.credits} créditos</p>
+                                <p class="text-xs text-gray-500 mb-3">Prof. ${subject.professor}</p>
+                                <div class="flex items-center space-x-2 flex-wrap gap-2">
+                                    <span class="inline-block bg-gradient-to-r from-schedule-primary to-schedule-secondary text-white text-xs px-3 py-1 rounded-full font-medium">
+                                        ${subject.subject_type}
+                                    </span>
+                                    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                                        ${subject.available_slots.length} horarios
+                                    </span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Toggle selección de materia
+    function toggleSubject(subjectCode) {
+        if (selectedSubjects.has(subjectCode)) {
+            selectedSubjects.delete(subjectCode);
+        } else {
+            selectedSubjects.add(subjectCode);
+        }
+        updateSelectedCount();
+    }
+
+    // Actualizar contador de materias seleccionadas
+    function updateSelectedCount() {
+        // Aquí se puede agregar lógica para mostrar cuántas materias están seleccionadas
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('schedule-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (selectedSubjects.size === 0) {
+            showNotification('Por favor, selecciona al menos una materia.', 'warning');
+            return;
+        }
+
+        // Mostrar loading
+        showLoading(true);
+        
+        try {
+            const requestData = {
+                available_subjects: availableSubjects,
+                student_constraints: {
+                    constraint_type: "general",
+                    description: "Restricciones del estudiante",
+                    blocked_time_slots: [],
+                    min_break_minutes: parseInt(document.getElementById('min-break').value),
+                    max_daily_hours: parseInt(document.getElementById('max-daily-hours').value),
+                    preferred_days: [],
+                    avoid_early_classes: document.getElementById('avoid-early').checked,
+                    avoid_late_classes: document.getElementById('avoid-late').checked
+                },
+                required_subject_codes: Array.from(selectedSubjects)
+            };
+
+            const response = await fetch('/api/v1/schedules/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Error generando horario');
+            }
+
+            const schedule = await response.json();
+            displaySchedule(schedule);
+            showNotification('¡Horario generado exitosamente!', 'success');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Error generando horario: ' + error.message, 'error');
+        } finally {
+            showLoading(false);
+        }
+    });
+
+    // Mostrar/ocultar loading
+    function showLoading(show) {
+        const modal = document.getElementById('loading-modal');
+        const generateText = document.getElementById('generate-text');
+        const loadingText = document.getElementById('loading-text');
+        
+        if (show) {
+            modal.classList.remove('hidden');
+            generateText.classList.add('hidden');
+            loadingText.classList.remove('hidden');
+        } else {
+            modal.classList.add('hidden');
+            generateText.classList.remove('hidden');
+            loadingText.classList.add('hidden');
+        }
+    }
+
+    // Mostrar horario generado con diseño premium
+    function displaySchedule(schedule) {
+        const container = document.getElementById('schedule-display');
+        const resultsSection = document.getElementById('results-section');
+        
+        // Agrupar por día
+        const scheduleByDay = {};
+        const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        
+        days.forEach(day => {
+            scheduleByDay[day] = [];
+        });
+        
+        schedule.schedule_slots.forEach(slot => {
+            scheduleByDay[slot.time_slot.day].push(slot);
+        });
+        
+        // Ordenar por hora de inicio
+        Object.keys(scheduleByDay).forEach(day => {
+            scheduleByDay[day].sort((a, b) => 
+                a.time_slot.start_time.localeCompare(b.time_slot.start_time)
+            );
+        });
+        
+        container.innerHTML = `
+            <div class="mb-8 p-6 bg-gradient-to-r from-schedule-success/10 to-schedule-teal/10 rounded-2xl border border-schedule-success/20">
+                <h3 class="text-xl font-display font-bold text-schedule-dark mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-schedule-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    Resumen del Horario Optimizado
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="bg-white/50 rounded-xl p-4">
+                        <div class="text-3xl font-display font-bold text-schedule-primary">${schedule.total_credits}</div>
+                        <div class="text-sm text-gray-600 font-medium">Créditos totales</div>
+                    </div>
+                    <div class="bg-white/50 rounded-xl p-4">
+                        <div class="text-3xl font-display font-bold text-schedule-success">${schedule.schedule_slots.length}</div>
+                        <div class="text-sm text-gray-600 font-medium">Materias</div>
+                    </div>
+                    <div class="bg-white/50 rounded-xl p-4">
+                        <div class="text-3xl font-display font-bold text-schedule-warning">${Object.values(scheduleByDay).filter(day => day.length > 0).length}</div>
+                        <div class="text-sm text-gray-600 font-medium">Días con clases</div>
+                    </div>
+                    <div class="bg-white/50 rounded-xl p-4">
+                        <div class="text-3xl font-display font-bold text-schedule-dark">2024-A</div>
+                        <div class="text-sm text-gray-600 font-medium">Semestre</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid gap-6">
+                ${days.map(day => `
+                    <div class="bg-gradient-to-br from-white to-schedule-light rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 ${scheduleByDay[day].length > 0 ? 'border-schedule-primary/30' : ''}">
+                        <div class="px-6 py-4 bg-gradient-to-r ${scheduleByDay[day].length > 0 ? 'from-schedule-primary/10 to-schedule-secondary/10 border-b border-schedule-primary/20' : 'from-gray-50 to-gray-100 border-b border-gray-200'}">
+                            <h4 class="font-display font-bold text-schedule-dark text-lg flex items-center">
+                                <span class="w-4 h-4 rounded-full ${scheduleByDay[day].length > 0 ? 'bg-schedule-success animate-pulse' : 'bg-gray-300'} mr-3"></span>
+                                ${day}
+                                <span class="ml-auto text-sm font-normal text-gray-500 bg-white/50 px-3 py-1 rounded-full">
+                                    ${scheduleByDay[day].length} ${scheduleByDay[day].length === 1 ? 'clase' : 'clases'}
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="p-6">
+                            ${scheduleByDay[day].length > 0 ? 
+                                scheduleByDay[day].map(slot => `
+                                    <div class="flex items-center justify-between py-4 border-b border-gray-100 last:border-b-0 hover:bg-white/50 rounded-xl px-4 -mx-4 transition-all duration-300">
+                                        <div class="flex-1">
+                                            <h5 class="font-display font-bold text-schedule-dark text-lg">${slot.subject.name}</h5>
+                                            <p class="text-sm text-gray-600 font-medium mb-2">${slot.subject.code} • Prof. ${slot.subject.professor}</p>
+                                            <div class="flex items-center space-x-2">
+                                                <span class="inline-block bg-gradient-to-r from-schedule-primary to-schedule-secondary text-white text-xs px-3 py-1 rounded-full font-medium">
+                                                    ${slot.subject.subject_type}
+                                                </span>
+                                                <span class="text-xs text-gray-500">${slot.subject.credits} créditos</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-right ml-6">
+                                            <p class="font-display font-bold text-schedule-primary text-xl">${slot.time_slot.start_time}</p>
+                                            <p class="font-display font-bold text-schedule-secondary text-xl">${slot.time_slot.end_time}</p>
+                                            <p class="text-xs text-gray-500 mt-1">2 horas</p>
+                                        </div>
+                                    </div>
+                                `).join('') : 
+                                '<div class="text-center py-12"><div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg></div><p class="text-gray-500 font-medium">Día libre - Sin clases programadas</p></div>'
+                            }
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        resultsSection.classList.remove('hidden');
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Resetear formulario
+    function resetForm() {
+        selectedSubjects.clear();
+        document.getElementById('schedule-form').reset();
+        document.getElementById('subjects-container').innerHTML = '';
+        document.getElementById('results-section').classList.add('hidden');
+        scrollToGenerator();
+        showNotification('Formulario reiniciado', 'info');
+    }
+
+    // Descargar horario (placeholder)
+    function downloadSchedule() {
+        showNotification('Función de descarga en desarrollo. Próximamente disponible.', 'info');
+    }
+
+    // Sistema de notificaciones
+    function showNotification(message, type = 'info') {
+        const colors = {
+            success: 'from-schedule-success to-schedule-teal',
+            error: 'from-red-500 to-red-600',
+            warning: 'from-schedule-warning to-yellow-500',
+            info: 'from-schedule-primary to-schedule-secondary'
+        };
+        
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 bg-gradient-to-r ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl z-50 transform translate-x-full transition-transform duration-300 font-medium`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+</script>
+{% endblock %}
