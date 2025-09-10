@@ -3,10 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScheduleWise</title>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+
+    <!-- Tailwind CSS usando CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuración personalizada para Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'schedule-primary': '#6366f1',
+                        'schedule-secondary': '#8b5cf6',
+                        'schedule-accent': '#06b6d4',
+                        'schedule-success': '#10b981',
+                        'schedule-warning': '#f59e0b',
+                        'schedule-dark': '#1e1b4b',
+                        'schedule-light': '#f8fafc',
+                        'schedule-purple': '#7c3aed',
+                        'schedule-pink': '#ec4899',
+                        'schedule-teal': '#14b8a6'
+                    },
+                    fontFamily: {
+                        'display': ['Poppins', 'system-ui', 'sans-serif'],
+                        'body': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    backgroundImage: {
+                        'schedule-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'schedule-mesh': 'radial-gradient(at 40% 20%, hsla(228,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%), radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%)',
+                        'schedule-card': 'linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)',
+                        'time-gradient': 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }   
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts --> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    {% block extra_head %}{% endblock %}
 </head>
-<body>
-    <p>Hola Estudiante!</p>
+<body class="h-full bg-schedule-light font-body">
+    <!-- Header -->
+    <header class="relative bg-schedule-mesh shadow-2xl overflow-hidden">
+        <!-- Elementos decorativos de fondo -->
+        <div class="absolute inset-0 bg-gradient-to-r from-schedule-primary/90 to-schedule-secondary/90"></div>
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-10 left-10"></div>
+            <div class="absolute top-20 right-20 w-16 h-16 bg-white/5 rounded-full animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-10 left-1/3 w-12 h-12 bg-white/10 rounded-full animate-float" style="animation-delay: 4s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm_px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo y branding -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-4">
+                        <!-- Logo creativo -->
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="absolute -top-1 -right-1 w-4 h-4 bg-schedule-accent rounded-full animate-pulse-slow"></div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-display font-bold text-white tracking-tight">
+                                Schedule<span class="text-schedule-accent">Wise</span>
+                            </h1>
+                            <p class="text-xs text-white/80 font-medium tracking-wide">Optimizador Inteligente</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navegación moderna -->
+                <nav class="hidden md:flex items-center space-x-2">
+                    <a href="/" class="group flex items-center text-white/90 hover:text-white hover:bg-white/10 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-sm">
+                        <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Generador
+                    </a>
+                    <a href="/schedule" class="group flex items-center text-white/90 hover:text-white hover:bg-white/10 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-sm">
+                        <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"></path>
+                        </svg>
+                        Mi Horario
+                    </a>
+                </nav>
+
+                <!-- Perfil del estudiante -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
+                        <div class="w-8 h-8 bg-gradient-to-br from-schedule-accent to-schedule-teal rounded-full flex items-center justify-center shadow-lg">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-white text-sm font-semibold">Estudiante CUCEI</span>
+                            <p class="text-white/70 text-xs">Semestre 2025-B</p>
+                        </div>
+                    </div>
+
+                    <!-- Menú móvil -->
+                    <div class="md:hidden">
+                        <button type="button" class="text-white/90 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-all duration-300" onclick="toggleMobileMenu()">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Menú movil -->
+        <div id="mobile-menu" class="hidden md:hidden relative bg-schedule-primary/95 backdrop-blur-sm border-t border-white/10">
+            <div class="px-4 pt-2 pb-3 space-y-1">
+                <a href="/" class="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-xl text-base font-medium transition-all duration-300">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Generador
+                </a>
+                <a href="/schedule" class="flex items-center px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-xl text-base font-medium transition-all duration-300">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"></path>
+                    </svg>
+                    Mi Horario
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="flex-1 relative">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-schedule-dark text-white overflow-hidden">
+        <!-- Fondo decorativo -->
+        <div class="absolute inset-0 bg-gradient-to-r from-schedule-dark to-schedule-primary/20"></div>
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-schedule-primary via-schedule-accent to-schedule-secondary"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                    <div class="w-10 h-10 bg-gradient-to-br from-schedule-primary to-schedule-secondary rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-lg font-display font-semibold">
+                            Schedule<span class="text-schedule-accent">Wise</span>
+                        </p>
+                        <p class="text-sm text-white/70">CUCEI - Universidad de Guadalajara</p>
+                    </div>
+                </div>
+
+                <div class="text-center md:text-right">
+                    <p class="text-sm text-white/80 font-medium">
+                        Optimización inteligente de horarios académicos
+                    </p>
+                    <p class="text-xs text-white/60 mt-1">
+                        © 2025 - Especializado en gestión de tiempo estudiantil
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Toggle menú móvil con animacion
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Cerrar menu movil al hacer click fuera
+        document.addEventListener('cick', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const button = event.target.closest('button');
+
+            if (!menu.contains(event.target) && !button) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Efectos de scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        })
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
