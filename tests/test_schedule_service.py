@@ -46,7 +46,7 @@ class TestScheduleGeneratorService:
                 credits=8,
                 subject_type="Dr. Martínez",
                 available_slots=[
-                    TimeSlots(time(10,0), time(12,0), DayOfWeek.MONDAY),
+                    TimeSlot(time(10,0), time(12,0), DayOfWeek.MONDAY),
                     TimeSlot(time(10,0), time(12, 0), DayOfWeek.WEDNESDAY),
                 ]
             )

@@ -42,6 +42,7 @@ class TimeSlotSchema(BaseModel):
             return v
         except ValueError:
             raise ValueError("Formato de tiempo inválido. Use HH:MM")
+            
     @validator('end_time')
     def validate_end_after_start(cls, v, values):
         """ Valida que la hora de fin sea posterior a la de inicio """

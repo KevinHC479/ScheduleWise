@@ -223,7 +223,7 @@ class GreedyScheduleOptimizer(ScheduleOptimizer):
                 continue
             
             # Ordenar por hora de inicio
-            scored_slots = sorted(day_slots, key=lambda s: s.start_time)
+            sorted_slots = sorted(day_slots, key=lambda s: s.start_time)
 
             # Calcular breaks entre clases consecutivas
             for i in range(len(sorted_slots) - 1):

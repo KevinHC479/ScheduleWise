@@ -18,7 +18,7 @@ class DayOfWeek(Enum):
 
 class SubjectType(Enum):
     """ Enum para tipos de materias - Value Object """
-    LECTURE = "Lectura"
+    LECTURE = "Cátedra"
     LAB = "Laboratorio"
     SEMINAR = "Seminario"
     WORKSHOP = "Taller"
@@ -109,7 +109,7 @@ class Schedule:
     Entidad agregada que representa un horario completo
     Implementa el patrón Aggregate Root
     """
-    sudent_id: str
+    student_id: str
     semester: int
     schedule_slots: List[ScheduleSlot]
     total_credits: int = 0

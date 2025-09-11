@@ -186,7 +186,7 @@ def _convert_subjects_to_domain(subjects_dto: List[SubjectSchema]) -> List[Subje
             time_slot = TimeSlot(
                 start_time=time.fromisoformat(slot_dto.start_time),
                 end_time=time.fromisoformat(slot_dto.end_time),
-                day=DayOfWeek(slot_dt)
+                day=DayOfWeek(slot_dto.day.value) ## CORREGIDO
             )
             time_slots.append(time_slot)
         
