@@ -44,7 +44,8 @@ class TestScheduleGeneratorService:
                 code="MAT101",
                 name="Cálculo I",
                 credits=8,
-                subject_type="Dr. Martínez",
+                subject_type=SubjectType.LECTURE,
+                professor="Dr. Martínez",
                 available_slots=[
                     TimeSlot(time(10,0), time(12,0), DayOfWeek.MONDAY),
                     TimeSlot(time(10,0), time(12, 0), DayOfWeek.WEDNESDAY),
@@ -68,7 +69,7 @@ class TestScheduleGeneratorService:
         Impelementa el patrón Given-When-Then
         """
         # Given: Matrias válidas y restricciones
-        required_subject = {"CC101", "MAT101"}
+        required_subjects = {"CC101", "MAT101"}
 
         # When: Generar horario
         result = self.service.generate_schedule(
