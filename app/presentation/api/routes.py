@@ -34,7 +34,7 @@ def get_schedule_service() -> ScheduleGeneratorService:
     responses={
         400: {"model": ErrorResponseSchema},
         422: {"model": ErrorResponseSchema},
-        500: {"model", ErrorResponseSchema}
+        500: {"model": ErrorResponseSchema}
     },
     summary="Generar horario optimizado",
     description="Genera un horario académico optimizado basado en materias disponibles y restricciones del estudiante"

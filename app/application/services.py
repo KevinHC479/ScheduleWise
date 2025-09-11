@@ -263,7 +263,7 @@ class ScheduleGeneratorService:
     def generate_schedule(
         self,
         available_subjects: List[Subject],
-        student_constraints: StudendConstraint,
+        student_constraints: StudentConstraint,
         required_subject_codes: Set[str]
     ) -> Optional[Schedule]:
         """
