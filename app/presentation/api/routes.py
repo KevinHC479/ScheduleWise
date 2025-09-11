@@ -155,7 +155,7 @@ async def get_cucei_subjects() -> List[SubjectSchema]:
         }
     ]
 
-    return [SubjectSchema(**subject) for subject in sambple_subjects]
+    return [SubjectSchema(**subject) for subject in sample_subjects]
 
 @schedule_router.get(
     "/health",
